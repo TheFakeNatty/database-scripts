@@ -192,6 +192,35 @@ myList.forEach(function(entry) {
         }
       }
     );
+    db.getCollection(entry).aggregate(
+      {
+        $match: 
+        {
+          TIME: { $exists: true }
+        }
+      },
+      { 
+        $set: {
+          "TIME": {
+            $cond: {
+              if: { $eq:["$TIME", null] },
+              then: null,
+              else: {$dateFromString:{
+                  dateString: "$TIME"
+              }}
+            }
+          }
+        }
+      },
+      {
+        $merge: 
+        {
+          into: entry,
+          whenMatched: "merge",
+          whenNotMatched: "discard"
+        }
+      }
+    );
   };
 });
 

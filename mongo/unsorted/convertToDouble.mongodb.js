@@ -1,26 +1,13 @@
 // Select the database to use.
 use('Test-Data');
 
-// Add this to queries to show the execution time: explain("executionStats")
-// Insert a few documents into the sales collection.
-// db.getCollection('IoT_Devices').find()
-
-// Average Temperature for DeviceID 8001
-/* db.getCollection('IoT_Devices').aggregate([
-    // Find all of the sales that occurred in 2014.
-    { $match: { ID: '8001' } },
-    // Group the total sales for each product.
-    { $group: { _id: "$ID", Testing: { $: "$TMP" } } }
-  ]);
-
-  */
-
+var collection_id = "IoT_Devices"
 
 console.log("Starting the operations:"); 
 
 const startTime = new Date();
 
-var settmp = db.getCollection('IoT_Devices').aggregate(
+var settmp = db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -42,7 +29,7 @@ var settmp = db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
@@ -51,7 +38,7 @@ var settmp = db.getCollection('IoT_Devices').aggregate(
 
 console.log(settmp);
 
-var setopt = db.getCollection('IoT_Devices').aggregate(
+var setopt = db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -73,7 +60,7 @@ var setopt = db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
@@ -81,7 +68,7 @@ var setopt = db.getCollection('IoT_Devices').aggregate(
 );
 console.log(setopt);
 
-var sethdt = db.getCollection('IoT_Devices').aggregate(
+var sethdt = db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -103,7 +90,7 @@ var sethdt = db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
@@ -112,7 +99,7 @@ var sethdt = db.getCollection('IoT_Devices').aggregate(
 
 console.log(sethdt);
 
-var setbat = db.getCollection('IoT_Devices').aggregate(
+var setbat = db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -134,7 +121,7 @@ var setbat = db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
@@ -143,7 +130,7 @@ var setbat = db.getCollection('IoT_Devices').aggregate(
 
 console.log(setbat);
 
-db.getCollection('IoT_Devices').aggregate(
+db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -165,14 +152,14 @@ db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
   }
 );
 
-db.getCollection('IoT_Devices').aggregate(
+db.getCollection(collection_id).aggregate(
   {
     $match: 
     {
@@ -194,7 +181,36 @@ db.getCollection('IoT_Devices').aggregate(
   {
     $merge: 
     {
-      into: 'IoT_Devices',
+      into: collection_id,
+      whenMatched: "merge",
+      whenNotMatched: "discard"
+    }
+  }
+);
+db.getCollection(collection_id).aggregate(
+  {
+    $match: 
+    {
+      TIME: { $exists: true }
+    }
+  },
+  { 
+    $set: {
+      "TIME": {
+        $cond: {
+          if: { $eq:["$TIME", null] },
+          then: null,
+          else: {$dateFromString:{
+              dateString: "$TIME"
+          }}
+        }
+      }
+    }
+  },
+  {
+    $merge: 
+    {
+      into: collection_id,
       whenMatched: "merge",
       whenNotMatched: "discard"
     }
