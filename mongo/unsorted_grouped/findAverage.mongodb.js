@@ -177,11 +177,10 @@ myList.forEach(function(collection){
     );
 });
 
+// Printing out the stop time for the run to console. 
+
 const endTime = new Date();
 
 const elapsedTime = endTime - startTime;
 
 console.log(elapsedTime);
-
-
-// Printing out the stop time for the run to console. 
