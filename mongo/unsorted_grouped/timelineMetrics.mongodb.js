@@ -25,7 +25,7 @@ console.log("Starting the operations:");
 
 const startTime = new Date();
 
-use('Test-Data');
+use('Unsorted_Grouped');
 
 var myList = db.getCollectionNames();
 

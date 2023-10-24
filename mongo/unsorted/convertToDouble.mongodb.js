@@ -1,5 +1,5 @@
 // Select the database to use.
-use('Test-Data');
+use('Unsorted');
 
 var collection_id = "IoT_Devices"
 

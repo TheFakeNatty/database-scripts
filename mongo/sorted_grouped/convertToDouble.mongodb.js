@@ -1,5 +1,5 @@
 // Select the database to use.
-use('Unsorted_Grouped');
+use('Test-Data');
 
 console.log("Starting the operations:"); 
 
@@ -11,22 +11,25 @@ myList.forEach(function(entry) {
   if (entry == 'main'){
     ;
   }
+  else if ((entry.includes('system.'))){
+    console.log(entry);
+  }
   else {
     var settmp = db.getCollection(entry).aggregate(
       {
         $match: 
         {
-          TMP: { $exists: true },
-          TMP: {$regex:  /^\d+\.\d+$/ } 
+          "metadata.TMP": { $exists: true },
+          "metadata.TMP": {$regex:  /^\d+\.\d+$/ } 
         }
       },
       { 
         $set: {
-          "TMP": {
+          "metadata.TMP": {
             $cond: {
-              if: { $eq:["$TMP", null] },
+              if: { $eq:["$metadata.TMP", null] },
               then: null,
-              else: {$toDouble: "$TMP"}
+              else: {$toDouble: "$metadata.TMP"}
             }
           }
         }
@@ -179,35 +182,6 @@ myList.forEach(function(entry) {
               if: { $eq:["$HDH", null] },
               then: null,
               else: {$toDouble: "$HDH"}
-            }
-          }
-        }
-      },
-      {
-        $merge: 
-        {
-          into: entry,
-          whenMatched: "merge",
-          whenNotMatched: "discard"
-        }
-      }
-    );
-    db.getCollection(entry).aggregate(
-      {
-        $match: 
-        {
-          TIME: { $exists: true }
-        }
-      },
-      { 
-        $set: {
-          "TIME": {
-            $cond: {
-              if: { $eq:["$TIME", null] },
-              then: null,
-              else: {$dateFromString:{
-                  dateString: "$TIME"
-              }}
             }
           }
         }
