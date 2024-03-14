@@ -1,5 +1,5 @@
 // Select the database to use.
-use('Test-Data');
+use('Sorted_Grouped');
 
 console.log("Starting the operations:"); 
 

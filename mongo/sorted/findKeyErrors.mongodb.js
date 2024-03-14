@@ -1,4 +1,4 @@
-use('Test-Data');
+use('Sorted');
 
 var collection = 'IoT_Devices'
 

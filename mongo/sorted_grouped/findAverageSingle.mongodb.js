@@ -1,10 +1,12 @@
-use('Sorted');
+use('Sorted_Grouped');
 
 console.log("Starting the operations:"); 
 
 const startTime = new Date();
 
-db.getCollection('IoT_Devices').aggregate([
+var collectionID = '8004';
+
+db.getCollection(collectionID).aggregate([
     {
         $match: {
             "metadata.ID": {$exists: true}
