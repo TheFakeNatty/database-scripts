@@ -10,18 +10,18 @@ db.getCollection(collection_id).updateMany(
     { "ID": "8001" },
     { $set: { "ID": "8100" } }
   );
-  db.getCollection(collection_id).updateMany(
-    { "ID": "8002" },
-    { $set: { "ID": "8200" } }
-  );
-  db.getCollection(collection_id).updateMany(
-    { "ID": "8003" },
-    { $set: { "ID": "8300" } }
-  );
-  db.getCollection(collection_id).updateMany(
-    { "ID": "8004" },
-    { $set: { "ID": "8400" } }
-  );
+db.getCollection(collection_id).updateMany(
+  { "ID": "8002" },
+  { $set: { "ID": "8200" } }
+);
+db.getCollection(collection_id).updateMany(
+  { "ID": "8003" },
+  { $set: { "ID": "8300" } }
+);
+db.getCollection(collection_id).updateMany(
+  { "ID": "8004" },
+  { $set: { "ID": "8400" } }
+);
 
 
 const endTime = new Date();
