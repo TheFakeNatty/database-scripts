@@ -7,7 +7,7 @@ const startTime = new Date();
 db.getCollection('IoT_Devices').aggregate([
     {
         $match: {
-            "metadata.ID": '8001'
+            "metadata.ID": {$exists: true}
         }
     },
     {
