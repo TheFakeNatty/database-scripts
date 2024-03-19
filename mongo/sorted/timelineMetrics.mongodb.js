@@ -25,7 +25,7 @@ console.log("Starting the operations:");
 
 const startTime = new Date();
 
-use('Sorted');
+use('Test-Data');
 
 var collection = "IoT_Devices"
 
@@ -35,7 +35,11 @@ var endDate = "2022-05-01";
 
 let tempDate = startDate;
 
-var uniqueKey = db.getCollection(collection).distinct("metadata.ID")
+use('Test-Data');
+
+var collection = "IoT_Devices"
+
+var uniqueKey = db.getCollection(collection).distinct("ID")
 
 // While loop iterates over every month by incrementing the month by one per loop.
 while( tempDate <= endDate){
